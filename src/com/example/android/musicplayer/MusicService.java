@@ -56,6 +56,8 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
     // The tag we put on debug messages
     final static String TAG = "datafruits.fm";
 
+    final String RADIO_URL = "http://www.datafruits.fm:8000/datafruits.mp3";
+
     // These are the Intent actions that we are prepared to handle. Notice that the fact these
     // constants exist in our class is a mere convenience: what really defines the actions our
     // service can handle are the <action> tags in the <intent-filters> tag for our service in
@@ -65,8 +67,6 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
     public static final String ACTION_PLAY = "com.example.android.musicplayer.action.PLAY";
     public static final String ACTION_PAUSE = "com.example.android.musicplayer.action.PAUSE";
     public static final String ACTION_STOP = "com.example.android.musicplayer.action.STOP";
-    public static final String ACTION_SKIP = "com.example.android.musicplayer.action.SKIP";
-    public static final String ACTION_REWIND = "com.example.android.musicplayer.action.REWIND";
     public static final String ACTION_URL = "com.example.android.musicplayer.action.URL";
 
     // The volume we set the media player to when we lose audio focus, but are allowed to reduce
@@ -214,9 +214,7 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
         if (action.equals(ACTION_TOGGLE_PLAYBACK)) processTogglePlaybackRequest();
         else if (action.equals(ACTION_PLAY)) processPlayRequest();
         else if (action.equals(ACTION_PAUSE)) processPauseRequest();
-        else if (action.equals(ACTION_SKIP)) processSkipRequest();
         else if (action.equals(ACTION_STOP)) processStopRequest();
-        else if (action.equals(ACTION_REWIND)) processRewindRequest();
         else if (action.equals(ACTION_URL)) processAddRequest(intent);
 
         return START_NOT_STICKY; // Means we started the service, but don't want it to
@@ -246,7 +244,7 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
 
         if (mState == State.Stopped) {
             // If we're stopped, just go ahead to the next song and start playing
-            playNextSong(null);
+            playNextSong(RADIO_URL);
         }
         else if (mState == State.Paused) {
             // If we're paused, just continue playback and restore the 'foreground service' state.
@@ -282,18 +280,6 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
         if (mRemoteControlClientCompat != null) {
             mRemoteControlClientCompat
                     .setPlaybackState(RemoteControlClient.PLAYSTATE_PAUSED);
-        }
-    }
-
-    void processRewindRequest() {
-        if (mState == State.Playing || mState == State.Paused)
-            mPlayer.seekTo(0);
-    }
-
-    void processSkipRequest() {
-        if (mState == State.Playing || mState == State.Paused) {
-            tryToGetAudioFocus();
-            playNextSong(null);
         }
     }
 
@@ -405,16 +391,16 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
 
         try {
             MusicRetriever.Item playingItem = null;
-            if (manualUrl != null) {
+            //if (manualUrl != null) {
                 // set the source of the media player to a manual URL or path
-                createMediaPlayerIfNeeded();
-                mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mPlayer.setDataSource(manualUrl);
-                mIsStreaming = manualUrl.startsWith("http:") || manualUrl.startsWith("https:");
+            createMediaPlayerIfNeeded();
+            mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mPlayer.setDataSource(manualUrl);
+            mIsStreaming = manualUrl.startsWith("http:") || manualUrl.startsWith("https:");
 
-                playingItem = new MusicRetriever.Item(0, null, manualUrl, null, 0);
-            }
-            else {
+            playingItem = new MusicRetriever.Item(0, null, manualUrl, null, 0);
+            //}
+            /*else {
                 mIsStreaming = false; // playing a locally available song
 
                 playingItem = mRetriever.getRandomItem();
@@ -431,7 +417,7 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
                 createMediaPlayerIfNeeded();
                 mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mPlayer.setDataSource(getApplicationContext(), playingItem.getURI());
-            }
+            }*/
 
             mSongTitle = playingItem.getTitle();
 
@@ -500,7 +486,7 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
     /** Called when media player is done playing current song. */
     public void onCompletion(MediaPlayer player) {
         // The media player finished playing the current song, so we go ahead and start the next.
-        playNextSong(null);
+        playNextSong(RADIO_URL);
     }
 
     /** Called when media player is done preparing. */
@@ -579,8 +565,9 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
         // If the flag indicates we should start playing after retrieving, let's do that now.
         if (mStartPlayingAfterRetrieve) {
             tryToGetAudioFocus();
-            playNextSong(mWhatToPlayAfterRetrieve == null ?
-                    null : mWhatToPlayAfterRetrieve.toString());
+            //playNextSong(mWhatToPlayAfterRetrieve == null ?
+            //        null : mWhatToPlayAfterRetrieve.toString());
+            playNextSong(RADIO_URL);
         }
     }
 

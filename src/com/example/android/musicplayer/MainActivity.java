@@ -42,10 +42,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
     Button mPlayButton;
     Button mPauseButton;
-    Button mSkipButton;
-    Button mRewindButton;
-    Button mStopButton;
-    Button mEjectButton;
 
     /**
      * Called when the activity is first created. Here, we simply set the event listeners and
@@ -59,17 +55,9 @@ public class MainActivity extends Activity implements OnClickListener {
 
         mPlayButton = (Button) findViewById(R.id.playbutton);
         mPauseButton = (Button) findViewById(R.id.pausebutton);
-        mSkipButton = (Button) findViewById(R.id.skipbutton);
-        mRewindButton = (Button) findViewById(R.id.rewindbutton);
-        mStopButton = (Button) findViewById(R.id.stopbutton);
-        mEjectButton = (Button) findViewById(R.id.ejectbutton);
 
         mPlayButton.setOnClickListener(this);
         mPauseButton.setOnClickListener(this);
-        mSkipButton.setOnClickListener(this);
-        mRewindButton.setOnClickListener(this);
-        mStopButton.setOnClickListener(this);
-        mEjectButton.setOnClickListener(this);
     }
 
     public void onClick(View target) {
@@ -78,15 +66,6 @@ public class MainActivity extends Activity implements OnClickListener {
             startService(new Intent(MusicService.ACTION_PLAY));
         else if (target == mPauseButton)
             startService(new Intent(MusicService.ACTION_PAUSE));
-        else if (target == mSkipButton)
-            startService(new Intent(MusicService.ACTION_SKIP));
-        else if (target == mRewindButton)
-            startService(new Intent(MusicService.ACTION_REWIND));
-        else if (target == mStopButton)
-            startService(new Intent(MusicService.ACTION_STOP));
-        else if (target == mEjectButton) {
-            showUrlDialog();
-        }
     }
 
     /** 
