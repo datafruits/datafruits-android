@@ -1,9 +1,0 @@
-# view AndroidManifest.xml #generated:29
--keep class com.example.android.musicplayer.MainActivity { <init>(...); }
-
-# view AndroidManifest.xml #generated:51
--keep class com.example.android.musicplayer.MusicIntentReceiver { <init>(...); }
-
-# view AndroidManifest.xml #generated:38
--keep class com.example.android.musicplayer.MusicService { <init>(...); }
-
