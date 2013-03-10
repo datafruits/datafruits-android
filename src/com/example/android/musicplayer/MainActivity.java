@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ToggleButton;
 import android.widget.EditText;
 
 /** 
@@ -40,8 +40,7 @@ public class MainActivity extends Activity implements OnClickListener {
      */
     final String SUGGESTED_URL = "http://www.datafruits.fm:8000/datafruits.mp3";
 
-    Button mPlayButton;
-    Button mPauseButton;
+    ToggleButton mPlayButton;
 
     /**
      * Called when the activity is first created. Here, we simply set the event listeners and
@@ -53,19 +52,16 @@ public class MainActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        mPlayButton = (Button) findViewById(R.id.playbutton);
-        mPauseButton = (Button) findViewById(R.id.pausebutton);
+        mPlayButton = (ToggleButton) findViewById(R.id.playbutton);
 
         mPlayButton.setOnClickListener(this);
-        mPauseButton.setOnClickListener(this);
     }
 
     public void onClick(View target) {
         // Send the correct intent to the MusicService, according to the button that was clicked
-        if (target == mPlayButton)
-            startService(new Intent(MusicService.ACTION_PLAY));
-        else if (target == mPauseButton)
-            startService(new Intent(MusicService.ACTION_PAUSE));
+        if (target == mPlayButton) {
+            startService(new Intent(MusicService.ACTION_TOGGLE_PLAYBACK));
+        }
     }
 
     /** 

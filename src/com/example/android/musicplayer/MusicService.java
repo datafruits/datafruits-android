@@ -99,7 +99,7 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
 
     // if mStartPlayingAfterRetrieve is true, this variable indicates the URL that we should
     // start playing when we are ready. If null, we should play a random song from the device
-    Uri mWhatToPlayAfterRetrieve = null;
+    Uri mWhatToPlayAfterRetrieve = Uri.parse(RADIO_URL);
 
     enum PauseReason {
         UserRequest,  // paused by user request
@@ -222,7 +222,13 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
     }
 
     void processTogglePlaybackRequest() {
-        if (mState == State.Paused || mState == State.Stopped) {
+        if (mState == State.Retrieving) {
+            // If we are still retrieving media, just set the flag to start playing when we're
+            // ready
+            //mWhatToPlayAfterRetrieve = null; // play a random song
+            mStartPlayingAfterRetrieve = true;
+            return;
+        } else if (mState == State.Paused || mState == State.Stopped) {
             processPlayRequest();
         } else {
             processPauseRequest();

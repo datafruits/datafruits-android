@@ -34,16 +34,13 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_margin="10dp">
-        <Button android:id="@+id/playbutton"
+        <ToggleButton android:id="@+id/playbutton"
             android:background="@drawable/btn_play"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="5dp" />
-        <Button android:id="@+id/pausebutton"
-            android:background="@drawable/btn_pause"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:textOff=""
+            android:textOn="" />
     </LinearLayout>
 
 </LinearLayout>
