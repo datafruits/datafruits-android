@@ -56,7 +56,7 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
     // The tag we put on debug messages
     final static String TAG = "datafruits.fm";
 
-    final String RADIO_URL = "http://www.datafruits.fm:8000/datafruits.mp3";
+    final String RADIO_URL = "http://radio.datafruits.fm:8000/datafruits.mp3";
 
     // These are the Intent actions that we are prepared to handle. Notice that the fact these
     // constants exist in our class is a mere convenience: what really defines the actions our
