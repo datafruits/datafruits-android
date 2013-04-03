@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.musicplayer;
+package com.datafruits.radioplayer;
 
 import android.media.AudioManager;
 import android.util.Log;

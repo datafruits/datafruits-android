@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.musicplayer;
+package com.datafruits.radioplayer;
 
 import android.app.Notification;
 import android.app.NotificationManager;
