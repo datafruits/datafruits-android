@@ -508,7 +508,7 @@ public class MusicService extends Service implements OnCompletionListener, OnPre
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), MainActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        mNotification.setLatestEventInfo(getApplicationContext(), "RandomMusicPlayer", text, pi);
+        mNotification.setLatestEventInfo(getApplicationContext(), "DATAFRUITS.FM", text, pi);
         mNotificationManager.notify(NOTIFICATION_ID, mNotification);
     }
 
